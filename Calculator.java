@@ -28,37 +28,27 @@ public class Calculator extends JFrame {
         display.setFont(new Font("style",Font.BOLD,40));
         display.setPreferredSize(new Dimension(200,150));
         add(display, BorderLayout.NORTH);
-
-        // Button panel
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(5, 4, 5, 5));
         add(buttonPanel, BorderLayout.CENTER);
-
-        // Button text
         String[] buttons = {
         	"²", "√", "C", "⌫",
             "7", "8", "9", "÷",
             "4", "5", "6", "×",
             "1", "2", "3", "-",
-            ".", "0", "=", "+"
-            
+            ".", "0", "=", "+"   
         };
-
-        // Create and add buttons
         for (String text : buttons) {
             JButton button = new JButton(text);
             button.addActionListener(new ButtonClickListener());
             buttonPanel.add(button);
         }
-
         setVisible(true);
     }
-
     private class ButtonClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
-
             if (command.equals("C")) {
                 input.setLength(0);
                 display.setText("");
@@ -109,12 +99,8 @@ public class Calculator extends JFrame {
 
         private String evaluateExpression(String expression) {
             try {
-                // Replace "^" with "^2" for squaring operation
                 expression = expression.replaceAll("\\^2", "**2");
-
-                // Tokenize and convert to Reverse Polish Notation (RPN)
                 String rpn = infixToRpn(expression);
-                // Evaluate the RPN expression
                 return String.valueOf(evaluateRpn(rpn));
             } catch (Exception e) {
                 return "xaou";
@@ -141,7 +127,7 @@ public class Calculator extends JFrame {
                     while (!operators.isEmpty() && operators.peek() != '(') {
                         output.append(operators.pop()).append(' ');
                     }
-                    operators.pop(); // Remove '('
+                    operators.pop();
                 }
             }
 
